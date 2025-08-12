@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <style>
+body {
+    background-color: #FFFFFF;
+    font-family: verdana, tahoma, geneva, sans-serif;
+    font-size: 20px;
+}
+
+@media (max-width: 990px) {
+    body,td,center {
+        font-size: 34px;
+    }
+}
+        </style>
+    </head>
+    <body>
+        <h1>Have a nice day!</h1>
+        <p>
+            And here is a picture of a dog:<br>
+            <img src="cat.png" style="width: 800px; height: 800px;">
+            <a href="https://www.youtube.com/shorts/pHwBZwJuaJI">Here's a Cute Dog Video!</a>
+            <i>You have pushed the button  <span id = "how_many"></span> times!</i>
+            <param id ='how_many'>
+        </p>
+        <script>
+            
+            const on_push = () => {
+                let payload = {
+                
+                action: 'push_button',
+
+            };
+            fetch('ajax', {
+                    body: JSON.stringify(payload),
+                    cache: "no-cache",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    method: "POST",
+                })
+                .then(response => response.text())
+                .then(text => {
+                    console.log(`The server replied ${text}`);
+                    let response_ob = JSON.parse(text);
+                    let el = document.getElementById('how_many');
+                    el.innerHTML = response_ob.push_count;
+                    
+                })
+                .catch(ex => {
+                    console.log(`An error occurred: ${ex}\n${ex.stack}`);
+                });
+                
+            }
+        </script>
+        <button onclick="on_push()">Never push me</button>
+    </body>
+</html>
