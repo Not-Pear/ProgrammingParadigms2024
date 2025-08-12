@@ -1,0 +1,1 @@
+The purpose of this project was to familiarize myself with the Model View Controller (MVC) architecture. In this project, you can click anywhere in the window to place an item. You can also click in the upper right hand corner to change the object you are placing. 
