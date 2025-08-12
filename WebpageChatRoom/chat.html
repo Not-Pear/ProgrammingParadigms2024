@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <title>Programming Assignment 5</title>
+  <style>
+  body {
+    background-color: #c0b8b0;
+  }
+
+  body,td,center {
+    font-family: verdana, tahoma, geneva, sans-serif;
+    font-size: 20px;
+  }
+
+  @media (max-width: 990px) {
+    body,td,center {
+      font-size: 34px;
+    }
+  }
+
+  p {
+    line-height: 2.5;
+    padding-bottom: 25px;
+    text-indent: 80px;
+  }
+
+  .noindent {
+      text-indent: 0px;
+  }
+
+  .quote {
+      color: green;
+      padding-left: 80px;
+      text-indent: 0px;
+  }
+
+  li {
+    line-height: 1.3;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .code {
+      color:#a0ffa0;
+      background-color:#000000;
+      width:680px;
+      overflow-x:scroll;
+  }
+  </style>
+</head>
+<body>
+<br><br>
+<table border=1 bgcolor=#fff8f4 cellpadding=40 width=800 align=center><tr><td>
+<a href="instructions.html">Return to choice page</a>
+<br>
+<h1>Client-server programming<br>(chat option)</h1>
+<br><br>
+
+
+<br><br><b><u>Step 2: Back stuff up</u></b><br><br>
+This project builds on the previous one, so make sure you back up
+your code in case you ever want to start over at this point.
+
+
+
+<br><br><b><u>Step 3: Make a message-posting page</u></b><br><br>
+As a starting point, replace the contents of your &lt;style&gt; tag with the following .css code:
+
+<pre class="code">
+body{
+	background: #202020;
+	color: #f0f0f0;
+	border: 0;
+	margin: 0;
+}
+body, textarea, input, button {
+	font-family: verdana, tahoma, geneva, sans-serif;
+	font-size:24px;
+}
+textarea {
+	box-sizing: border-box;
+	width: 100%;
+}
+@media (max-width: 990px) {
+	body, textarea, input, button {
+    	font-size:48px;
+    }
+	td {
+		height: 72px;
+	}
+}
+.bubble_left {
+	padding: 10px;
+	border: solid #705060;
+	border-radius: 30px;
+	background-color: #503040;
+	padding-top: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	margin-right: 100px;
+}
+.bubble_right {
+	padding: 10px;
+	border: solid #507060;
+	border-radius: 30px;
+	background-color: #305040;
+	padding-top: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	margin-left: 100px;
+}
+code {
+	white-space: break-spaces;
+	font-family: verdana, tahoma, geneva, sans-serif;
+}
+</pre>
+
+Please feel free to customize this code to your liking.
+
+<br><br>
+
+Put this HTML in your &lt;body&gt; tag:
+
+<pre class="code">
+        &lt;div style="position:fixed; top:0; left:0; width:100%; background:#808080; display:flex;"&gt;
+            &lt;div style="float:left; width:100%; display:flex; flex-flow:column; justify-content:space-around;"&gt;
+                &lt;table width="100%"&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;
+                            &lt;textarea id="chat_text" oninput="auto_grow_text_area(this)" style="box-sizing: border-box;"&gt;&lt;/textarea&gt;
+                            &lt;/td&gt;&lt;td valign="bottom" width="80px"&gt;
+                            &lt;button onclick="on_post_message()"&gt;Post&lt;/button&gt;
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/table&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+        &lt;table id="chats" width="100%"&gt;&lt;/table&gt;
+        &lt;script src="chat.js"&gt;&lt;/script&gt;
+</pre>
+
+And add <a href="chat.js">this file</a> to your project.
+<br><br>
+
+Then open client.html in your favorite web browser.
+You should see that you can enter messages, and they appear on the page.
+<br><br>
+Now, take some time to examine the code.
+You are going to need to understand this code,
+so be sure to ask questions if some of it does not make sense.
+
+<br><br><b><u>Step 4:</u></b>
+
+Use your AJAX skills to turn this into a chat program.
+<br><br>
+That is, we want two or more clients to connect to the same server.
+Each client should see the messages they post in a green bubble,
+and the messages posted by any other clients in a red bubble.
+Also, please add a time stamp to each message to indicate when it was sent.
+<br><br>
+Of course, you should make sure no messages are lost, and no messages are displayed more than once.
+<br><br>
+Some tips:
+<ul>
+  <li>
+    Note that each client has a random ID.
+    I recommend sending that ID to the server each time you send a chat message.
+    That way, the server will know who is sending it.
+  </li>
+  <li>
+    If your server still has a variable named "count", you should probably remove that.
+    We're not counting button presses anymore.
+  </li>
+  <li>
+    The server should probably store the whole conversation.
+    When a client requests updates, it should probably tell the server how many messages it has already received, so the server can just send it the new messages that have come in since then.
+  </li>
+  <li>
+    You can use JSON.stringify to convert an object to a string (so you can send it over the Internet).
+    Then, when you receive a string, you can use JSON.parse to convert it back to an object.
+  </li>
+  <li>
+    JSON does not support Date objects, so you will need to convert your timestamps to strings in order to encode them in JSON format.
+    The Date class has a method named toISOString that will convert a Date object to a string.
+    Unfortunately, (and weirdly) it does not provide a suitable function for parsing ISO strings.
+    So here's one I swiped from an answer I found on StackOverflow that seems to work for me:
+<pre class="code">
+const parseISOString = (s) =&gt; {
+  let b = s.split(/\D+/);
+  return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+}
+</pre>
+  </li>
+  <li>
+    You can use set_interval to call a function at regular intervals to check for updates.
+    500 miliseconds might be a good interval to use.
+    (If you use a larger interval, there will be more lag.
+    If you use a smaller interval, you will hammer your server with update requests.)
+  </li>
+</ul>
+
+<br><br><b><u>Step 5:</u></b>
+A good user interface should be as snappy as possible.
+When users post messages, they expect those messages to appear immediately
+(as opposed to after the message bounces off the server).
+However, it is also important for the users to know that the server has received the message.
+<br><br>
+So when you post a message, display it immediately, but leave the timestamp empty.
+When the server finally gets back to you with that same message, update the timestamp.
+This way, the interface will seem snappy, but users will know their message was received when the timestamp appears.
+<br><br>
+To do this, you should send some kind of hidden unique ID with each message.
+Then use that ID to find the corresponding timestamp span, so you can update it.
+(Make sure messages you post do not appear multiple times. That would be really confusing.)
+
+
+<br><br><b><u>Step 6:</u></b>
+Delete all generated files.
+Make sure there is a script named "run.bash" that the graders can use.
+Here is the run.bash file I used to launch my implementation:<br>
+<pre class="code">
+#!/bin/bash
+set -e
+echo "launching server..."
+node server.js &
+echo "launching client A..."
+open http://127.0.0.1:8080/client.html &
+echo "launching client B..."
+open http://127.0.0.1:8080/client.html &
+echo "waiting for all processes to finish..."
+wait
+echo "Done."
+</pre>
+Zip up your code. To submit the assignment, <a href="http://jacquard.ddns.uark.edu/pp_game_submit.html">click here</a>
+
+</td></tr></table>
+<br><br><br><br>
+</body>
+</html>
