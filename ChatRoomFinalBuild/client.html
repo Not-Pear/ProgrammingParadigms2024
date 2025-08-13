@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <style>
+body{
+	background: #202020;
+	color: #f0f0f0;
+	border: 0;
+	margin: 0;
+}
+body, textarea, input, button {
+	font-family: verdana, tahoma, geneva, sans-serif;
+	font-size:24px;
+}
+textarea {
+	box-sizing: border-box;
+	width: 100%;
+}
+@media (max-width: 990px) {
+	body, textarea, input, button {
+    	font-size:48px;
+    }
+	td {
+		height: 72px;
+	}
+}
+.bubble_left {
+	padding: 10px;
+	border: solid #705060;
+	border-radius: 30px;
+	background-color: #503040;
+	padding-top: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	margin-right: 100px;
+}
+.bubble_right {
+	padding: 10px;
+	border: solid #507060;
+	border-radius: 30px;
+	background-color: #305040;
+	padding-top: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	margin-left: 100px;
+}
+code {
+	white-space: break-spaces;
+	font-family: verdana, tahoma, geneva, sans-serif;
+}
+        </style>
+    </head>
+    <body>
+        <p>Chat Room</p>
+        <!--
+        <div style="position:fixed; top:600; left:600; width:100%; background:#808080; display:flex;">
+            <div style="float:left; width:100%; display:flex; flex-flow:column; justify-content:space-around;">
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <textarea id="chat_text" oninput="auto_grow_text_area(this)" style="box-sizing: border-box;"></textarea>
+                            </td><td valign="bottom" width="80px">
+                                
+                            <button onclick="on_post_message()">Post</button>
+                            
+                        </td>
+                        
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+        
+    -->
+        <div id="content"></div>
+        <br><br><br><br>
+        <script src="chat.ts"></script>
+        <!--<table id="chats" width="100%"></table>-->
+        
+        <div id="login" width="100%">
+            <!--<body> What is your name?<br></body>-->
+            <body>What is your name?:</body>
+            <input type="text" id="username" name="">
+            <br><br>
+            <button onclick="on_push()">Log In</button>
+
+        </div>
+        
+        <!--<script>
+            
+            const on_push = () => {
+                postData();
+            }
+                
+            async function postData(){
+                try{
+                    let name = document.getElementById("username").value;
+                    //console.log(`name is`);
+                    //console.log(name);
+                    //document.body.innerHTML = '';
+                    
+                    let payload = {
+                    
+                    action: 'logIn',
+                    name: name
+                    };
+
+                    //console.log(`before fetch`);
+                    const response = await fetch('ajax', {
+                        body: JSON.stringify(payload),
+                        cache: "no-cache",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        method: "POST",
+                    })
+
+                    text = await response.text();
+
+                    let response_ob = JSON.parse(text);
+                    document.getElementById("login").innerHTML = "";
+                    //console.log(`inside logIn -------------`);
+                    chat(name);
+                    // text = {
+                    //     console.log(`The server replied inside client ${text}`);
+                    //     let response_ob = JSON.parse(text);
+                    //     document.getElementById("login").innerHTML = "";
+                    //     console.log(`inside logIn -------------`);
+                    //     chat(name);
+                    // }
+                }   
+                catch(ex) {
+                    console.log(`An error occurred: ${ex}\n${ex.stack}`);
+                };
+
+
+            }
+            
+
+            
+
+                
+            
+        </script>-->
+        
+    </body>
+</html>
